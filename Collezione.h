@@ -5,9 +5,10 @@
 #ifndef PROGETTO_COLLEZIONE_H
 #define PROGETTO_COLLEZIONE_H
 #include "Nota.h"
+#include "Subject.h"
 #include <list>
 
-class Collezione {
+class Collezione :public Subject{
     public:
 
         Collezione(std::string name): name(name){};
@@ -23,9 +24,21 @@ class Collezione {
 
         void ReadAll();
 
+        int contaNota();
+
+        void AddObserver(Observer *o) override;
+
+        void RemObserver(Observer *o) override;
+
+        void notify() override;
+
+
+
     private:
         std::list <Nota* > note;
+        std::list <Observer*>obs;
         std::string name;
+
 };
 
 

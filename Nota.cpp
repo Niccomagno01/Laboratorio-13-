@@ -28,7 +28,7 @@ void Nota::changeLock() {
 }
 
 void Nota::read(){
-    std::cout << "titolo: " << title << std::endl;
+    std::cout << "\ntitolo: " << title << std::endl;
     std::cout << "testo: " << text << std::endl;
     if(lock){
         std::cout <<"blocco: si \n"<< std::endl;
