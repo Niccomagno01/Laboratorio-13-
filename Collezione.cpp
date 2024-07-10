@@ -3,6 +3,11 @@
 //
 
 #include "Collezione.h"
+#include "Collezione_Observer.h"
+
+Collezione::Collezione(std::string name) {
+    Collezione_Observer* obs = new Collezione_Observer(this);
+}
 const std::string &Collezione::getName() const {
     return name;
 }
@@ -28,7 +33,6 @@ void Collezione::DeleteNota(Nota* nota) {
     }
     for (auto itr = note.begin(); itr != note.end(); itr++) {
         if ((*itr)->getTitle() == nota->getTitle()) {
-            delete *itr;
             note.erase(itr);
             notify();
             break;
@@ -63,3 +67,8 @@ int Collezione::contaNota() {
         }
     return conta;
 }
+
+const std::list<Nota *> &Collezione::getNote() const {
+    return note;
+}
+

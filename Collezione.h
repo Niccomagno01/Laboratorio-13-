@@ -11,7 +11,7 @@
 class Collezione :public Subject{
     public:
 
-        Collezione(std::string name): name(name){};
+        Collezione(std::string name = "");
         ~Collezione(){};
 
         const std::string &getName() const;
@@ -24,6 +24,8 @@ class Collezione :public Subject{
 
         void ReadAll();
 
+        const std::list<Nota *> &getNote() const;
+
         int contaNota();
 
         void AddObserver(Observer *o) override;
@@ -32,9 +34,7 @@ class Collezione :public Subject{
 
         void notify() override;
 
-
-
-    private:
+private:
         std::list <Nota* > note;
         std::list <Observer*>obs;
         std::string name;
