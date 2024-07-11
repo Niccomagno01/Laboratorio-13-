@@ -4,40 +4,46 @@
 
 #ifndef PROGETTO_COLLEZIONE_H
 #define PROGETTO_COLLEZIONE_H
+
 #include "Nota.h"
 #include "Subject.h"
 #include <list>
 
+class Collezione_Observer; //faccio una dichiarazione anticipata per evitare problemi di inclusione circolare
+
 class Collezione :public Subject{
-    public:
+public:
 
-       Collezione(std::string name ="");
-        ~Collezione(){};
+    Collezione(std::string name ="");
 
-        const std::string &getName() const;
+    ~Collezione();
 
-        void setName(const std::string &name);
+    const std::string &getName() const;
 
-        void AddNota(Nota* nota);
+    void setName(const std::string &name);
 
-        void DeleteNota(Nota* nota);
+    void AddNota(Nota* nota);
 
-        void ReadAll();
+    void DeleteNota(Nota* nota);
 
-        const std::list<Nota *> &getNote() const;
+    void ReadAll();
 
-        int contaNota();
+    const std::list<Nota *> &getNote() const;
 
-        void AddObserver(Observer *o) override;
+    int contaNota();
 
-        void RemObserver(Observer *o) override;
+    void AddObserver(Observer *o) override;
 
-        void notify() override;
+    void RemObserver(Observer *o) override;
+
+    void notify() override;
 
 private:
-        std::list <Nota* > note;
-        std::list <Observer*>obs;
-        std::string name;
+
+    std::list <Nota* > note;
+    std::list <Observer*>obs;
+    std::string name;
+    Collezione_Observer* observer;
 
 };
 

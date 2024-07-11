@@ -6,8 +6,13 @@
 #include "Collezione_Observer.h"
 
 Collezione::Collezione(std::string name): name(name){
-    Collezione_Observer* obs = new Collezione_Observer(this);
+   observer = new Collezione_Observer(this);
 }
+
+Collezione::~Collezione() {
+ observer->~Collezione_Observer();
+}
+
 const std::string &Collezione::getName() const {
     return name;
 }
@@ -24,7 +29,6 @@ void Collezione::AddNota(Nota* nota) {
         std::cerr << "[ERRORE]: tentativo di aggiungere una nota non esistente." << std::endl;
     }
 }
-
 
 void Collezione::DeleteNota(Nota* nota) {
     if (!nota) {
@@ -63,12 +67,11 @@ void Collezione::notify() {
 int Collezione::contaNota() {
     int conta = 0;
     for(auto &itr:note){
-            conta++;
-        }
+        conta++;
+    }
     return conta;
 }
 
 const std::list<Nota *> &Collezione::getNote() const {
     return note;
 }
-

@@ -55,4 +55,7 @@ int main() {
     //cancello nota prova
     std::cout << "\ncancello nota prova da collezione\n" << std::endl;
     c->DeleteNota(prova);
+    delete ci;
+    delete c;
+    return 0;
 }
