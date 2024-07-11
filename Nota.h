@@ -8,7 +8,7 @@
 class Nota {
 public:
 
-    Nota(std::string title, std::string text, bool lock);
+    Nota(std::string title = "", std::string text ="", bool lock= false);
     ~Nota(){};
 
     void SetTitle(std::string newTitle);
@@ -16,6 +16,10 @@ public:
     const std::string &getTitle() const;
 
     void SetText(std::string newText);
+
+    const std::string &getText() const;
+
+    bool isLock() const;
 
     void changeLock();
 

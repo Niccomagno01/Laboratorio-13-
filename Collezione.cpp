@@ -5,7 +5,7 @@
 #include "Collezione.h"
 #include "Collezione_Observer.h"
 
-Collezione::Collezione(std::string name) {
+Collezione::Collezione(std::string name): name(name){
     Collezione_Observer* obs = new Collezione_Observer(this);
 }
 const std::string &Collezione::getName() const {

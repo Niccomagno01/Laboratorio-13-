@@ -11,7 +11,7 @@
 class Collezione :public Subject{
     public:
 
-        Collezione(std::string name = "");
+       Collezione(std::string name ="");
         ~Collezione(){};
 
         const std::string &getName() const;

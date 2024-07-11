@@ -3,7 +3,7 @@
 //
 
 #include "Nota.h"
-Nota::Nota(std::string title, std::string text, bool lock): title(title), text(text), lock(lock = false) {}
+Nota::Nota(std::string title, std::string text, bool lock): title(title), text(text), lock(lock) {}
 
 void Nota::SetTitle(std::string newTitle){
     if(!lock)
@@ -33,4 +33,12 @@ void Nota::read(){
     if(lock){
         std::cout <<"blocco: si \n"<< std::endl;
     }
+}
+
+const std::string &Nota::getText() const {
+    return text;
+}
+
+bool Nota::isLock() const {
+    return lock;
 }
