@@ -8,6 +8,7 @@
 #include "Nota.h"
 #include "Subject.h"
 #include <list>
+#include <memory>
 
 class Collezione_Observer; //faccio una dichiarazione anticipata per evitare problemi di inclusione circolare
 
@@ -43,7 +44,7 @@ private:
     std::list <Nota* > note;
     std::list <Observer*>obs;
     std::string name;
-    Collezione_Observer* observer;
+    std::unique_ptr<Observer> observer;
 
 };
 

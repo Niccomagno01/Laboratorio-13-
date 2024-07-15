@@ -34,3 +34,10 @@ TEST (Nota, modifyFALSE){
     ASSERT_EQ(nota1.getTitle(), "Creazione2");
     ASSERT_EQ(nota1.getText(), "Testo2");
 }
+
+TEST(Nota, lettura){
+    Nota nota1("Creazione1", "Testo1", true);
+    nota1.read();
+    nota1.changeLock();
+    nota1.read();
+}

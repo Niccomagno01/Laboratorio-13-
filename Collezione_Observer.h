@@ -15,7 +15,7 @@ public:
 
     ~Collezione_Observer(){
         detach();
-        std::cout<<"[RIMOZIONE] Rimozione dell'observer"<<std::endl;
+        std::cout<<"[RIMOZIONE] Rimozione dell'observer \n\n"<<std::endl;
     };
 
     void attach() override{

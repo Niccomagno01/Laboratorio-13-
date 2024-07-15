@@ -4,14 +4,14 @@
 
 #include "Collezione.h"
 #include "Collezione_Observer.h"
+#include <memory>
+
 
 Collezione::Collezione(std::string name): name(name){
-   observer = new Collezione_Observer(this);
+    observer = std::make_unique<Collezione_Observer>(this);
 }
 
-Collezione::~Collezione() {
- observer->~Collezione_Observer();
-}
+Collezione::~Collezione() {}
 
 const std::string &Collezione::getName() const {
     return name;
