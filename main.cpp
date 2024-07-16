@@ -1,61 +1,69 @@
 #include <iostream>
 #include "Collezione.h"
-#include "Nota.h"
 #include "Collezione_Observer.h"
-#include "Collezione_Importante.h"
+#include "Nota.h"
 
 int main() {
+
     //creo note prova
-    Nota* prova = new Nota("prova", "testo di prova", false);
-    Nota* prova2 = new Nota("prova2", "testo di prova2", false);
-    Nota* prova3 = new Nota("prova3", "testo di prova3", false);
+    Nota *prova = new Nota("prova", "testo di prova", true);
+    Nota *prova2 = new Nota("prova2", "testo di prova2", false);
+    Nota *prova3 = new Nota("prova3", "testo di prova3", false);
+
+    try {
+        //leggo nota
+        std::cout << "leggo nota prova" << std::endl;
+        std::cout << prova->read() << std::endl;
+
+        //modifica nota
+        std::cout << "modifica nota prova2" << std::endl;
+        prova2->SetTitle("prova5");
+        prova2->SetText("non bloccata");
+
+        //modifica nota bloccata
+        std::cout << "modifica nota prova" << std::endl;
+        prova->SetTitle("prova5");
+
+        //leggo nota
+        std::cout << "leggo nota prova" << std::endl;
+        std::cout << prova->read() << std::endl;
+    }
+    catch (const NotaException &e) {
+        std::cerr << "Errore nella modifica della nota: " << e.what() << std::endl;
+    }
 
     //creo collezione
-    Collezione* c = new Collezione("Collezione");
+    Collezione *c = new Collezione("Collezione");
 
-    //aggiungo note
-    std::cout<< "Prova aggiunta note" << std::endl;
-    c->AddNota(prova);
-    c->AddNota(prova2);
-    c->AddNota(prova3);
-
-   //leggo tutte le note
-    std::cout << "\n[Contenuto note nella collezione]" << std::endl;
-    c->ReadAll();
-
-    //cambio nome collezione
-    std::cout << "\n cambio nome collezione \n" << std::endl;
-    c->setName("collezione2");
-    std::cout << "nome collezione: " << c->getName() << std::endl;
-
-    //creo collezione importante
-    std::cout<< "\nProva collezione importante\n" << std::endl;
-   Collezione_Importante* ci = new Collezione_Importante("Collezione importante");
+    //aggiungo observer
+    Collezione_Observer *co = new Collezione_Observer(c);
 
 
-    //aggiungo note in importante
-    ci->AddNota(prova);
-    ci->AddNota(prova3);
+    //aggiungo note come shared ptr
+    c->AddNota(std::shared_ptr<Nota>(prova));
+    c->AddNota(std::shared_ptr<Nota>(prova2));
 
     //leggo tutte le note
-    std::cout << "\nleggo tutte le note importanti \n" << std::endl;
-    ci->ReadAll();
+    std::cout << "\nleggo tutte le note nella collezione importante \n" << std::endl;
+    c->ReadAll();
 
     //cancello nota
-    std::cout << "\ncancello nota prova3 da collezione\n" << std::endl;
-    ci->DeleteNota(prova3);
-
-    //blocco nota prova
-    prova->changeLock();
+    std::cout << "\ncancello nota prova da collezione c\n" << std::endl;
+    c->DeleteNota("prova5");
 
     //leggo tutte le note
-    std::cout << "leggo tutte le note: " << std::endl;
+    std::cout << "leggo tutte le note in c: " << std::endl;
     c->ReadAll();
 
-    //cancello nota prova
-    std::cout << "\ncancello nota prova da collezione\n" << std::endl;
-    c->DeleteNota(prova);
-    delete ci;
-    delete c;
+    //creo collezione importante
+    Collezione *c2 = new Collezione("Collezione importante", true);
+
+    //aggiungo observer associato
+    Collezione_Observer *co2 = new Collezione_Observer(c2);
+
+    //aggiungo note
+    c2->AddNota(std::shared_ptr<Nota>(prova3));
+    //aggiungo nota inesistente
+    c2->AddNota(std::shared_ptr<Nota>(nullptr));
     return 0;
 }

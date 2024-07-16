@@ -78,3 +78,9 @@ TEST(Collezione, ReadAll) {
     test.AddNota(std::make_shared<Nota>(nota2));
     test.ReadAll();
 }
+
+TEST(Collezione, CambiaImportante) {
+    Collezione test("Test");
+    test.setIsImportant(true);
+    ASSERT_EQ(test.isImportant1(), true);
+}

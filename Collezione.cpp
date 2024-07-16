@@ -7,7 +7,7 @@
 #include <stdexcept>
 
 
-Collezione::Collezione(const std::string &name) : name(name) {}
+Collezione::Collezione(const std::string &name, bool isImportant) : name(name), isImportant(isImportant) {}
 
 Collezione::~Collezione() {}
 
@@ -114,3 +114,12 @@ void Collezione::ModifyNota(const std::string &name, const std::string &newTitle
         throw;
     }
 }
+
+bool Collezione::isImportant1() const {
+    return isImportant;
+}
+
+void Collezione::setIsImportant(bool isImportant) {
+    Collezione::isImportant = isImportant;
+}
+

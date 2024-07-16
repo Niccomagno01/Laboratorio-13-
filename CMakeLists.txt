@@ -10,7 +10,6 @@ set(SOURCE-FILES Collezione.cpp Collezione.h
         Nota.cpp Nota.h
         Observer.h
         Subject.h
-        Collezione_Importante.h
         Eccezioni.h) #aggiunto per includere i file cpp e h
 add_executable(${CMAKE_PROJECT_NAME} main.cpp)
 add_library(${CMAKE_PROJECT_NAME}_lib ${SOURCE-FILES})

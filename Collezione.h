@@ -14,7 +14,7 @@
 class Collezione : public Subject {
 public:
 
-    Collezione(const std::string &name = "");
+    Collezione(const std::string &name = "", bool isImportant = false);
 
     ~Collezione();
 
@@ -34,6 +34,10 @@ public:
 
     int contaNota() const;
 
+    bool isImportant1() const;
+
+    void setIsImportant(bool isImportant);
+
     void AddObserver(Observer *o) override;
 
     void RemObserver(Observer *o) override;
@@ -45,6 +49,7 @@ private:
     std::list<std::shared_ptr<Nota>> note;
     std::list<Observer *> obs;
     std::string name;
+    bool isImportant;
 
 };
 
