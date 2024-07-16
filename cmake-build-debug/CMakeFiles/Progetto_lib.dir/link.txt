@@ -1,0 +1,2 @@
+/Library/Developer/CommandLineTools/usr/bin/ar qc libProgetto_lib.a CMakeFiles/Progetto_lib.dir/Collezione.cpp.o CMakeFiles/Progetto_lib.dir/Nota.cpp.o
+/Library/Developer/CommandLineTools/usr/bin/ranlib libProgetto_lib.a
