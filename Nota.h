@@ -5,6 +5,7 @@
 #ifndef PROGETTO_NOTA_H
 #define PROGETTO_NOTA_H
 
+#include "Eccezioni.h"
 #include <iostream>
 #include <string>
 

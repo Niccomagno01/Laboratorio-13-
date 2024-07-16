@@ -3,7 +3,7 @@ set(CMAKE_CXX_STANDARD 11)
 
 add_subdirectory(lib/googletest-1.14.0)
 
-set(gtest_SOURCE_DIR, ./lib/googletest-1.14.0 )
+set(gtest_SOURCE_DIR, ./lib/googletest-1.14.0)
 
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 

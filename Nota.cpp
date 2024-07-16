@@ -7,10 +7,12 @@
 Nota::Nota(const std::string &title, const std::string &text, bool lock) : title(title), text(text), lock(lock) {}
 
 void Nota::SetTitle(const std::string &newTitle) {
-    if (!lock)
-        title = newTitle;
-    else
-        std::cout << "nota bloccata" << std::endl;
+
+    if (lock) {
+        throw NotaBloccataException("Nota bloccata, impossibile modificare il titolo");
+    }
+
+    title = newTitle;
 }
 
 const std::string &Nota::getTitle() const {
@@ -18,10 +20,12 @@ const std::string &Nota::getTitle() const {
 }
 
 void Nota::SetText(const std::string &newText) {
-    if (!lock)
-        text = newText;
-    else
-        std::cout << "nota bloccata" << std::endl;
+
+    if (lock) {
+        throw NotaBloccataException("Nota bloccata, impossibile modificare il testo");
+    }
+
+    text = newText;
 }
 
 void Nota::changeLock() {

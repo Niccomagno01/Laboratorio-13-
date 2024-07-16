@@ -10,8 +10,9 @@ set(SOURCE-FILES Collezione.cpp Collezione.h
         Nota.cpp Nota.h
         Observer.h
         Subject.h
-        Collezione_Importante.h) #aggiunto per includere i file cpp e h
+        Collezione_Importante.h
+        Eccezioni.h) #aggiunto per includere i file cpp e h
 add_executable(${CMAKE_PROJECT_NAME} main.cpp)
-add_library(${CMAKE_PROJECT_NAME}_lib ${SOURCE-FILES}) #aggiunto per includere i file cpp e h
+add_library(${CMAKE_PROJECT_NAME}_lib ${SOURCE-FILES})
 target_link_libraries(${CMAKE_PROJECT_NAME}
-        ${CMAKE_PROJECT_NAME}_lib) #aggiunto per includere la cartella test
+        ${CMAKE_PROJECT_NAME}_lib)
