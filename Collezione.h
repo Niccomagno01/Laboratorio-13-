@@ -7,15 +7,14 @@
 
 #include "Nota.h"
 #include "Subject.h"
+#include "Eccezioni.h"
 #include <list>
 #include <memory>
 
-class Collezione_Observer; //faccio una dichiarazione anticipata per evitare problemi di inclusione circolare
-
-class Collezione :public Subject{
+class Collezione : public Subject {
 public:
 
-    Collezione(std::string name ="");
+    Collezione(const std::string &name = "");
 
     ~Collezione();
 
@@ -23,15 +22,17 @@ public:
 
     void setName(const std::string &name);
 
-    void AddNota(Nota* nota);
+    void AddNota(std::shared_ptr<Nota> nota);
 
-    void DeleteNota(Nota* nota);
+    void ModifyNota(const std::string &name, const std::string &newTitle, const std::string &newText);
 
-    void ReadAll();
+    void DeleteNota(const std::string &name);
 
-    const std::list<Nota *> &getNote() const;
+    void ReadAll() const;
 
-    int contaNota();
+    const std::list<std::shared_ptr<Nota>> &getNote() const;
+
+    int contaNota() const;
 
     void AddObserver(Observer *o) override;
 
@@ -41,10 +42,9 @@ public:
 
 private:
 
-    std::list <Nota* > note;
-    std::list <Observer*>obs;
+    std::list<std::shared_ptr<Nota>> note;
+    std::list<Observer *> obs;
     std::string name;
-    std::unique_ptr<Observer> observer;
 
 };
 

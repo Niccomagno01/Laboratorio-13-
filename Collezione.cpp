@@ -3,13 +3,11 @@
 //
 
 #include "Collezione.h"
-#include "Collezione_Observer.h"
 #include <memory>
+#include <stdexcept>
 
 
-Collezione::Collezione(std::string name): name(name){
-    observer = std::make_unique<Collezione_Observer>(this);
-}
+Collezione::Collezione(const std::string &name) : name(name) {}
 
 Collezione::~Collezione() {}
 
@@ -21,32 +19,51 @@ void Collezione::setName(const std::string &name) {
     Collezione::name = name;
 }
 
-void Collezione::AddNota(Nota* nota) {
-    if (nota) {
+
+void Collezione::AddNota(std::shared_ptr<Nota> nota) {
+    try {
+        if (!nota) {
+            throw std::invalid_argument("Tentativo di aggiungere una nota nulla");
+        }
+
         note.push_back(nota);
         notify();
-    } else {
-        std::cerr << "[ERRORE]: tentativo di aggiungere una nota non esistente." << std::endl;
+    }
+    catch (const std::invalid_argument &e) {
+        std::cerr << "Errore nell'aggiunta della nota: " << e.what() << std::endl;
+        throw;
+    }
+    catch (const NotaException &e) {
+        std::cerr << "Errore nell'aggiunta della nota: " << e.what() << std::endl;
+        throw;
     }
 }
 
-void Collezione::DeleteNota(Nota* nota) {
-    if (!nota) {
-        std::cerr << "[ERRORE]: tentativo di eliminare una nota non esistente." << std::endl;
-        return;
-    }
-    for (auto itr = note.begin(); itr != note.end(); itr++) {
-        if ((*itr)->getTitle() == nota->getTitle()) {
-            note.erase(itr);
-            notify();
-            break;
+void Collezione::DeleteNota(const std::string &name) {
+    try {
+        for (auto itr = note.begin(); itr != note.end(); itr++) {
+            if ((*itr)->getTitle() == name) {
+
+                if ((*itr)->isLock()) {
+                    throw NotaBloccataException("Nota bloccata, impossibile cancellare");
+                } else {
+                    note.erase(itr);
+                    notify();
+                    return;
+                }
+            }
         }
+        throw NotaNonTrovataException("Nota non trovata");
+    }
+    catch (const NotaException &e) {
+        std::cerr << "Errore nella cancellazione della nota: " << e.what() << std::endl;
+        throw;
     }
 }
 
-void Collezione::ReadAll() {
-    for (auto i : note) {
-        i->read();
+void Collezione::ReadAll() const {
+    for (const auto &itr: note) {
+        itr->read();
     }
 }
 
@@ -54,24 +71,46 @@ void Collezione::AddObserver(Observer *o) {
     obs.push_back(o);
 }
 
-void Collezione::RemObserver(Observer *o){
+void Collezione::RemObserver(Observer *o) {
     obs.remove(o);
 }
 
 void Collezione::notify() {
-    for (auto &itr : obs) {
+    for (auto &itr: obs) {
         itr->update();
     }
 }
 
-int Collezione::contaNota() {
-    int conta = 0;
-    for(auto &itr:note){
-        conta++;
-    }
-    return conta;
+int Collezione::contaNota() const {
+    return note.size();
 }
 
-const std::list<Nota *> &Collezione::getNote() const {
+const std::list<std::shared_ptr<Nota>> &Collezione::getNote() const {
     return note;
+}
+
+void Collezione::ModifyNota(const std::string &name, const std::string &newTitle, const std::string &newText) {
+    try {
+        bool found = false;
+        for (auto &itr: note) {
+            if (itr->getTitle() == name) {
+
+                if (itr->isLock()) {
+                    throw NotaBloccataException("Nota bloccata, impossibile modificare");
+                }
+
+                itr->SetTitle(newTitle);
+                itr->SetText(newText);
+                found = true;
+                return;
+            }
+        }
+        if (!found) {
+            throw NotaNonTrovataException("Nota non trovata");
+        }
+    }
+    catch (const NotaException &e) {
+        std::cerr << "Errore nella modifica della nota: " << e.what() << std::endl;
+        throw;
+    }
 }
