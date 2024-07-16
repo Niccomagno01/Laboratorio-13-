@@ -4,18 +4,22 @@
 
 #ifndef PROGETTO_NOTA_H
 #define PROGETTO_NOTA_H
+
 #include <iostream>
+#include <string>
+
 class Nota {
 public:
 
-    Nota(std::string title = "", std::string text ="", bool lock= false);
-    ~Nota(){};
+    Nota(const std::string &title = "", const std::string &text = "", bool lock = false);
 
-    void SetTitle(std::string newTitle);
+    ~Nota() {};
+
+    void SetTitle(const std::string &newTitle);
 
     const std::string &getTitle() const;
 
-    void SetText(std::string newText);
+    void SetText(const std::string &newText);
 
     const std::string &getText() const;
 
@@ -23,7 +27,7 @@ public:
 
     void changeLock();
 
-    void read();
+    std::string read() const;
 
 private:
     std::string title;
